@@ -1,0 +1,51 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+.form-title{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    font-size: 30px;
+    font-weight: bold;
+}
+.in-container{
+    margin-top: 100px;
+}
+.img-container{
+    position: absolute;
+    margin-left: 70px;
+    z-index: -99;
+}
+.form-container{
+    position: relative;
+    width: 330px;
+    height: 305px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.signMes{
+    width: 330px;
+    height: 30px;
+    border-radius: 10px;
+}
+.text-error{
+    display: inline;
+    color: red;
+}
+.success{
+    display: inline;
+    color:green;
+}
+.signButt{
+    width: 330px;
+    height: 40px;
+    background-color:rgb(103, 124, 163); 
+    font-size: 25px;
+    color: 	#003C9D;
+}
+.login{
+    display: block;
+    text-align: center;
+}

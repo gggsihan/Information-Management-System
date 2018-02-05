@@ -1,0 +1,66 @@
+{% extends "base.html" %} {% block main %}
+<div class="in-container">
+    <div class="img-container">
+        <img src="/static/img/drug.jpg">
+    </div>
+    <div class="form-container">
+        <form  method="POST">
+            <div>
+                <div>
+                    <input placeholder="用户名" class="signMes" name="name">
+                </div>
+                <div>
+                    <input placeholder="密码" type="password" class="signMes password" name="password">
+                </div>
+                <div>
+                    <input placeholder="确认密码" type="password" class="signMes repassword" name="rePassword">
+                    <span class="text-error"></span>
+                    <span class="success"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="signButt" >注册</button>
+            <a class="login" onclick="javascript :history.back(-1)">返回</a>
+
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $(".signButt").click(function () {
+            $.ajax({
+                url: '/loginPage',
+                data: $("form").serialize(),
+                type: 'POST',
+                dataType:'json',
+                success: function (msg) {
+                    if (msg.data == -1) {
+                        $(".text-error").text('密码不为空或重复密码错误！');
+                        setTimeout(()=>{
+                            $(".text-error").text("")
+                        },2000);
+                        $(".signMes").val("");
+                    }else if(msg.data == -2){
+                        $(".text-error").text('用户已经存在！');
+                        setTimeout(()=>{
+                            $(".text-error").text("")
+                        },2000);
+                        $(".signMes").val("");
+                    }else{
+                        $(".success").text("注册成功！");
+                        setTimeout(()=>{
+                            $(".success").text("")
+                        },2000);
+                        setTimeout(()=>{
+                            window.location.href = "/";
+                        },1000);
+                    }
+                }
+            })
+            return false;
+        })
+    })
+    
+</script>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "base.html" %} {% block main %}
+
+<div class="contain">
+    <div class="nav">
+        <ul class="fenlei">
+            <li>
+                <a href="#">全部分类</a>
+            </li>
+            <li>
+                <a href="#">风湿骨科</a>
+            </li>
+            <li>
+                <a href="#">男科/泌尿科</a>
+            </li>
+            <li>
+                <a href="#">妇产科</a>
+            </li>
+            <li>
+                <a href="#">呼吸/消化科</a>
+            </li>
+            <li>
+                <a href="#">神经/精神科</a>
+            </li>
+            <li>
+                <a href="#">五官科</a>
+            </li>
+            <li>
+                <a href="#">皮肤性病科</a>
+            </li>
+            <li>
+                <a href="#">心血管/内分泌科</a>
+            </li>
+            <li>
+                <a href="#">肿瘤科</a>
+            </li>
+            <li>
+                <a href="#">儿科</a>
+            </li>
+            <li>
+                <a href="#">肝胆科</a>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <form class="search-form">
+            <input type="text" name="search">
+            <button>搜索</button>
+        </form>
+        <table class="drug-tb">
+            <thead class="drug-thead">
+                <tr>
+                    <th>药品名称</th>
+                    <th>科目</th>
+                    <th>规格</th>
+                    <th>剂型</th>
+                    <th>库存</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>阿莫西林</th>
+                    <th>呼吸/消化科</th>
+                    <th>4*8</th>
+                    <th>胶囊</th>
+                    <th>200</th>
+                    <th>
+                        <button>修改库存</button>
+                        <button>删除</button>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <button class="addDrug"><a href="/addDrugPage">添加药品</a></button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var $navList = $(".fenlei li");
+        $navList.click(function () {
+            $(this).addClass("active")
+                .siblings().removeClass("active");
+            
+            $.ajax({
+                url: "/drug",
+                type: "POST",
+                data: {},
+                dataType:"json",
+                success: function (msg) {
+                    alert('发送请求成功');
+                }
+            })
+        })
+    })
+
+    $(function(){
+        
+    })
+</script> 
+
+{% endblock %}
