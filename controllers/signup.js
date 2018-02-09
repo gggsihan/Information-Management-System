@@ -1,5 +1,5 @@
 //加载注册页面
-var someone = require('../user');
+var someone = require('../models/user');
 
 module.exports={
     'GET /loginPage':async(ctx,next)=>{

@@ -36,7 +36,7 @@ a{
 .nav{
 	width:20%;
 	float: left;
-	background-color: #CCDDFF;
+	background-color:white;
 }
 .nav .fenlei{
 	list-style: none;
@@ -55,14 +55,24 @@ a{
 	text-align: center;
 }
 .nav .fenlei .active{
-	background-color:  #0044BB;
+	background-color:  #CCDDFF;
+}
+.main-content li{
+	display: none;
+}
+.main-content .selected{
+	display: inline-block;
 }
 .nav .fenlei .active a{
-	color: #CCDDFF;
+	color: #0044BB;
 }
-.content{
+.main-content{
 	float: left;
 	width:80%;
+}
+.content{
+	width:100%;
+	padding-left: 40px;
 }
 .search-form{
 	float: right;

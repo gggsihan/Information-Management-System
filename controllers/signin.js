@@ -1,5 +1,5 @@
 //加载登录页面
-var someone = require('../user');
+var someone = require('../models/user');
 
 module.exports= {
     'GET /':async(ctx,next)=>{

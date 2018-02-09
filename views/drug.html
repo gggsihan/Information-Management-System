@@ -3,76 +3,76 @@
 <div class="contain">
     <div class="nav">
         <ul class="fenlei">
-            <li>
-                <a href="#">全部分类</a>
+            <li class="active">
+                <a href="/drug">药品列表</a>
             </li>
             <li>
-                <a href="#">风湿骨科</a>
+                <a>库存列表</a>
             </li>
             <li>
-                <a href="#">男科/泌尿科</a>
+                <a>入库单管理</a>
             </li>
             <li>
-                <a href="#">妇产科</a>
+                <a>出库单管理</a>
             </li>
-            <li>
-                <a href="#">呼吸/消化科</a>
-            </li>
-            <li>
-                <a href="#">神经/精神科</a>
-            </li>
-            <li>
-                <a href="#">五官科</a>
-            </li>
-            <li>
-                <a href="#">皮肤性病科</a>
-            </li>
-            <li>
-                <a href="#">心血管/内分泌科</a>
-            </li>
-            <li>
-                <a href="#">肿瘤科</a>
-            </li>
-            <li>
-                <a href="#">儿科</a>
-            </li>
-            <li>
-                <a href="#">肝胆科</a>
-            </li>
+            
         </ul>
     </div>
-    <div class="content">
-        <form class="search-form">
-            <input type="text" name="search">
-            <button>搜索</button>
-        </form>
-        <table class="drug-tb">
-            <thead class="drug-thead">
-                <tr>
-                    <th>药品名称</th>
-                    <th>科目</th>
-                    <th>规格</th>
-                    <th>剂型</th>
-                    <th>库存</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th>阿莫西林</th>
-                    <th>呼吸/消化科</th>
-                    <th>4*8</th>
-                    <th>胶囊</th>
-                    <th>200</th>
-                    <th>
-                        <button>修改库存</button>
-                        <button>删除</button>
-                    </th>
-                </tr>
-            </tbody>
-        </table>
-        <button class="addDrug"><a href="/addDrugPage">添加药品</a></button>
+    <div>
+        
     </div>
+    <ul class="main-content">
+        <li class="selected">
+            <div class="content">
+                <form method="POST" class="search-form">
+                    <input type="text" name="search">
+                    <button class="search-butt">搜索</button>
+                </form>
+                <table class="drug-tb">
+                    <thead class="drug-thead">
+                        <tr>
+                            <th>药品编号</th>
+                            <th>药品名称</th>
+                            <th>科目</th>
+                            <th>规格</th>
+                            <th>剂型</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            
+                    </tbody>
+                </table>
+                <button class="addDrug">
+                    <a href="/addDrugPage">添加药品</a>
+                </button>
+            </div>
+        </li>
+        <li>
+            <div class="content">
+                <form method="POST" class="search-form">
+                    <input type="text" name="search">
+                    <button class="search-butt">搜索</button>
+                </form>
+                <table class="drug-tb">
+                    <thead class="drug-thead">
+                        <tr>
+                            <th>药品编号</th>
+                            <th>药品名称</th>
+                            <th>库存</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li></li>
+        <li></li>
+    </ul>
+    
 </div>
 
 <script type="text/javascript">
@@ -81,21 +81,52 @@
         $navList.click(function () {
             $(this).addClass("active")
                 .siblings().removeClass("active");
+            $(".main-content >li").eq($(this).index()).addClass("selected")
+            .siblings().removeClass("selected");
             
+        })
+        $(".search-butt").click(function(){
             $.ajax({
-                url: "/drug",
-                type: "POST",
-                data: {},
-                dataType:"json",
-                success: function (msg) {
-                    alert('发送请求成功');
+                url: '/searchDrug',
+                data: $("form").serialize(),
+                type: 'POST',
+                dataType:'json',
+                success: function (msg){
+                    if(msg.data==-1){
+                        $("tbody").empty();
+                        $("tbody").append("未查询到该药品！")
+                    }else{
+                        $("tbody").empty();
+                        var drugList=msg.data;
+                        console.log(drugList)
+                        for(var i=0;i<drugList.length;i++){
+                            $("tbody").append("<tr><th>"+drugList[i].medicine+"</th><th>"+drugList[i].subject+
+                            "</th><th>"+drugList[i].specification+"</th><th>"+drugList[i].dosageform+
+                            "</th><button class='edit'>修改</button><button class='delete'>删除</button></th></tr>")
+                        }
+                    }
                 }
             })
+            return false;
         })
     })
 
     $(function(){
-        
+        $.ajax({
+            url: "/drug",
+            type: "POST",
+            data: {},
+            dataType: "json",
+            success: function (msg) {
+                var $tbody = $("tbody");
+                var drugList=msg.data;
+                for(var i=0;i<drugList.length;i++){
+                    $tbody.append("<tr><th>"+drugList[i].number+"</th><th>"+drugList[i].medicine+"</th><th>"+drugList[i].subject+
+                        "</th><th>"+drugList[i].specification+"</th><th>"+drugList[i].dosageform+
+                        "</th><th><button>修改</button><button>删除</button></th></tr>")
+                }
+            }
+        })
     })
 </script> 
 
