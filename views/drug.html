@@ -7,7 +7,7 @@
                 <a href="/drug">药品列表</a>
             </li>
             <li>
-                <a>库存列表</a>
+                <a >库存列表</a>
             </li>
             <li>
                 <a>入库单管理</a>
@@ -54,23 +54,62 @@
                     <input type="text" name="search">
                     <button class="search-butt">搜索</button>
                 </form>
-                <table class="drug-tb">
+                <table class="inven-tb">
                     <thead class="drug-thead">
                         <tr>
                             <th>药品编号</th>
                             <th>药品名称</th>
                             <th>库存</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-            
+                        
                     </tbody>
                 </table>
             </div>
         </li>
-        <li></li>
-        <li></li>
+        <li>
+            <div class="content">
+                
+                <table class="entry-tb">
+                    <thead class="drug-thead">
+                        <tr>
+                            <th>药品编号</th>
+                            <th>药品名称</th>
+                            <th>入库数量</th>
+                            <th>入库时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+                <button class="addDrug">
+                    <a href="/entry">药品入库</a>
+                </button>
+            </div>
+        </li>
+        <li>
+            <div class="content">
+                
+                <table class="output-tb">
+                    <thead class="drug-thead">
+                        <tr>
+                            <th>药品编号</th>
+                            <th>药品名称</th>
+                            <th>出库数量</th>
+                            <th>出库时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+                <button class="addDrug">
+                    <a href="/output">药品出库</a>
+                </button>
+            </div>
+        </li>
     </ul>
     
 </div>
@@ -100,15 +139,17 @@
                         var drugList=msg.data;
                         console.log(drugList)
                         for(var i=0;i<drugList.length;i++){
-                            $("tbody").append("<tr><th>"+drugList[i].medicine+"</th><th>"+drugList[i].subject+
+                            $("tbody").append("<tr><th>"+drugList[i].number+"</th><th>"+drugList[i].medicine+"</th><th>"+drugList[i].subject+
                             "</th><th>"+drugList[i].specification+"</th><th>"+drugList[i].dosageform+
-                            "</th><button class='edit'>修改</button><button class='delete'>删除</button></th></tr>")
+                            "</th><th><button><a >修改</a></button><button>删除</button></th></tr>")
                         }
                     }
                 }
             })
             return false;
-        })
+        });
+
+        
     })
 
     $(function(){
@@ -118,12 +159,57 @@
             data: {},
             dataType: "json",
             success: function (msg) {
-                var $tbody = $("tbody");
+                var $tbody = $(".drug-tb tbody");
                 var drugList=msg.data;
                 for(var i=0;i<drugList.length;i++){
                     $tbody.append("<tr><th>"+drugList[i].number+"</th><th>"+drugList[i].medicine+"</th><th>"+drugList[i].subject+
                         "</th><th>"+drugList[i].specification+"</th><th>"+drugList[i].dosageform+
                         "</th><th><button>修改</button><button>删除</button></th></tr>")
+                }
+            }
+        });
+
+        $.ajax({
+            url:"/inventory",
+            type:"POST",
+            data: {},
+            dataType: "json",
+            success:function(msg){
+                var $tbody = $(".inven-tb tbody");
+                var inventoryList=msg.data;
+                for(var i=0;i<inventoryList.length;i++){
+                    $tbody.append("<tr><th>"+inventoryList[i].number+"</th><th>"+inventoryList[i].medicine+
+                        "</th><th>"+inventoryList[i].inventory+"</th></tr>")
+                }
+            }
+        })
+
+        $.ajax({
+            url:"/entryList",
+            type:"POST",
+            data: {},
+            dataType: "json",
+            success:function(msg){
+                var $tbody= $(".entry-tb tbody");
+                var entryList=msg.data;
+                for(var i=0;i<entryList.length;i++){
+                    $tbody.append("<tr><th>"+entryList[i].number+"</th><th>"+entryList[i].medicine+"</th><th>"+
+                    entryList[i].quantity+"</th><th>"+entryList[i].date+"</th></tr>")
+                }
+            }
+        })
+
+        $.ajax({
+            url:"/outputList",
+            type:"POST",
+            data: {},
+            dataType: "json",
+            success:function(msg){
+                var $tbody= $(".output-tb tbody");
+                var outputList=msg.data;
+                for(var i=0;i<outputList.length;i++){
+                    $tbody.append("<tr><th>"+outputList[i].number+"</th><th>"+outputList[i].medicine+"</th><th>"+
+                        outputList[i].quantity+"</th><th>"+outputList[i].date+"</th></tr>")
                 }
             }
         })

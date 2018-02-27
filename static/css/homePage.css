@@ -88,10 +88,10 @@ a{
 	margin-left: 10px;
 	margin-right: 10px;
 }
-.drug-tb{
+table{
 	width: 100%;
 }
-.drug-tb tr th{
+table tr th{
 	height:50px;
 	width: 16%;
 	font-weight: normal;

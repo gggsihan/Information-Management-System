@@ -1,0 +1,65 @@
+{% extends "base.html" %} {% block main %}
+
+<div class="add-container">
+    <form action="/addDrug" method="POST">
+        <div class="detail">
+            编号：<input name="drugNum"><span class="text-error drugNum"></span>
+        </div>
+        <div class="detail">
+            药名：<input name="drugName"><span class="text-error drugName"></span>
+        </div>
+        <div class="detail">
+            入库数量：<input name="quantity">
+        </div>
+        
+        
+        <div><span class="success"></span><span class="text-error failed"></span></div>
+        <div class="butt">
+            <button class="entryButt" type="submit">确定</button>
+            <button class="cancel" onclick="javascript :history.back(-1)">取消</button>
+        </div>
+        
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $(".entryButt").click(function(){
+            $.ajax({
+                url: '/entry',
+                data: $("form").serialize(),
+                type: 'POST',
+                dataType:'json',
+                success: function (msg){
+                    if(msg.data==-1){
+                        $(".drugNum").text('药品编号不能为空！');
+                        setTimeout(()=>{
+                            $(".text-error").text("")
+                        },2000);
+                    }else if(msg.data==-2){
+                        $(".drugName").text('药品名称不能为空！');
+                        setTimeout(()=>{
+                            $(".text-error").text("")
+                        },2000);
+                    }else if(msg.data==-3){
+                        $(".failed").text('药品不存在，请先添加药品信息！');
+                        setTimeout(()=>{
+                            $(".text-error").text("")
+                        },2000);
+                    }else{
+                        $(".success").text("添加成功！");
+                        setTimeout(()=>{
+                            $(".success").text("")
+                        },2000);
+                        setTimeout(()=>{
+                            window.location.href = "/drug";
+                        },1000);
+                    }
+                }
+            })
+            return false;
+        })
+    })
+</script>
+
+{% endblock %}

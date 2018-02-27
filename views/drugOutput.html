@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% block main %}
+
+<div class="add-container">
+    <form action="/addDrug" method="POST">
+        <div class="detail">
+            编号：<input name="drugNum"><span class="drugNum"></span>
+        </div>
+        <div class="detail">
+            药名：<input name="drugName"><span class="drugName"></span>
+        </div>
+        <div class="detail">
+            出库数量：<input name="quantity">
+        </div>
+        
+        
+        <div><span class="success"></span></div>
+        <div class="butt">
+            <button class="outputButt" type="submit">确定</button>
+            <button class="cancel" onclick="javascript :history.back(-1)">取消</button>
+        </div>
+        
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $(".outputButt").click(function(){
+            $.ajax({
+                url: '/output',
+                data: $("form").serialize(),
+                type: 'POST',
+                dataType:'json',
+                success: function (msg)
+            })
+            return false;
+        })
+    })
+</script>
+
+{% endblock %}

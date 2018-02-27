@@ -25,7 +25,7 @@ var Drug = sequelize.define('drug',{
         field:'dosageform'
     },
     inventory:{
-        type:Sequelize.STRING,
+        type:Sequelize.INTEGER,
         field:'inventory'
     },
 },{
@@ -58,9 +58,17 @@ exports.findByDrugName = function(drugName){
 }
 
 exports.findByDrugNum = function(drugNum){
-    return Drug.findAll({
+    return Drug.findOne({
         where:{
-            number:number
+            number:drugNum
+        }
+    })
+}
+
+exports.updateInven = function(drugNum,quantity){
+    return Drug.update(quantity,{
+        where:{
+            number:drugNum
         }
     })
 }
