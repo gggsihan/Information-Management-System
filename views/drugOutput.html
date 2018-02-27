@@ -9,11 +9,11 @@
             药名：<input name="drugName"><span class="drugName"></span>
         </div>
         <div class="detail">
-            出库数量：<input name="quantity">
+            出量：<input name="quantity" class="quan">
         </div>
         
         
-        <div><span class="success"></span></div>
+        <div><span class="success"></span><span class="text-error failed"></span></div>
         <div class="butt">
             <button class="outputButt" type="submit">确定</button>
             <button class="cancel" onclick="javascript :history.back(-1)">取消</button>
@@ -30,7 +30,38 @@
                 data: $("form").serialize(),
                 type: 'POST',
                 dataType:'json',
-                success: function (msg)
+                success: function (msg){
+                    if(msg.data==-1){
+                        $(".drugNum").text('药品编号不能为空！');
+                        setTimeout(()=>{
+                            $(".text-error").text("")
+                        },2000);
+                    }else if(msg.data==-2){
+                        $(".drugName").text('药品名称不能为空！');
+                        setTimeout(()=>{
+                            $(".text-error").text("")
+                        },2000);
+                    }else if(msg.data==-3){
+                        $(".failed").text('药品不存在，请先添加药品信息！');
+                        setTimeout(()=>{
+                            $(".text-error").text("")
+                        },2000);
+                    }else if(msg.data==-4){
+                        $(".failed").text('出库数量大于库存数量，请重新输入出库数量！');
+                        $(".quan").val("");
+                        setTimeout(()=>{
+                            $(".text-error").text("")
+                        },2000);
+                    }else{
+                        $(".success").text("出库成功！");
+                        setTimeout(()=>{
+                            $(".success").text("")
+                        },2000);
+                        setTimeout(()=>{
+                            window.location.href = "/drug";
+                        },1000);
+                    }
+                }
             })
             return false;
         })

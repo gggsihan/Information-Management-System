@@ -65,10 +65,18 @@ exports.findByDrugNum = function(drugNum){
     })
 }
 
-exports.updateInven = function(drugNum,quantity){
-    return Drug.update(quantity,{
+exports.updateDrug = function(drugNum,someUpdate){
+    return Drug.update(someUpdate,{
         where:{
             number:drugNum
+        }
+    })
+}
+
+exports.deleteDrug=function(drugName){
+    return Drug.destroy({
+        where:{
+            medicine:drugName
         }
     })
 }

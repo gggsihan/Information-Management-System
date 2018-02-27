@@ -34,7 +34,7 @@ module.exports={
                         }
                         var newQuantity = { 'inventory': parseInt(result.inventory) + parseInt(quantity) };
 
-                        drug.updateInven(drugNum, newQuantity);
+                        drug.updateDrug(drugNum, newQuantity);
                         ctx.body = {
                             data: 1
                         }
